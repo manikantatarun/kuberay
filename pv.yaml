@@ -9,9 +9,9 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  # mountOptions:
-  #   - -o allow_other
-  #   - --file-cache-timeout-in-seconds=120
+  mountOptions:
+    - -o allow_other
+    - --file-cache-timeout-in-seconds=120
   csi:
     driver: blob.csi.azure.com
       #readOnly: true
