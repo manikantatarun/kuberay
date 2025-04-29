@@ -18,7 +18,7 @@ spec:
         working_dir: "https://github.com/manikantatarun/kuberay/archive/main.zip"
         pip: ["vllm==0.6.1.post2"]
         env_vars:
-          MODEL_ID: "/models/Llama-3.2-3B-Instruct"
+          MODEL_ID: "/llms/Llama-3.2-3B-Instruct"
           TENSOR_PARALLELISM: "2"
           PIPELINE_PARALLELISM: "1"
   rayClusterConfig:
@@ -80,7 +80,7 @@ spec:
             image: rayproject/ray-ml:2.33.0.914af0-py311
             volumeMounts:
             - name: model-volume
-              mountPath: /models
+              mountPath: /llms
             # env:
             # - name: HUGGING_FACE_HUB_TOKEN
             #   valueFrom:
