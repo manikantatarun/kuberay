@@ -75,6 +75,8 @@ spec:
                     operator: In 
                     values: 
                       - kuberay
+          securityContext:
+            fsGroup: 100
           containers:
           - name: llm
             image: rayproject/ray-ml:2.33.0.914af0-py311
