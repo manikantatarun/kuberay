@@ -39,11 +39,11 @@ spec:
           containers:
           - name: ray-head
             image: rayproject/ray-ml:2.33.0.914af0-py311
-            tolerations:
-            - key: "kubernetes.azure.com/scalesetpriority"
-              operator: "Equal"
-              value: "spot"
-              effect: "NoSchedule"
+          tolerations:
+          - key: "kubernetes.azure.com/scalesetpriority"
+            operator: "Equal"
+            value: "spot"
+            effect: "NoSchedule"
 
             # resources:
             #   limits:
