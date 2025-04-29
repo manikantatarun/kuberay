@@ -4,7 +4,7 @@ metadata:
   name: llms-pvc
 spec:
   accessModes:
-  - ReadOnlyMany
+  - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
