@@ -21,7 +21,7 @@ spec:
           MODEL_ID: "/mnt/Llama-3.2-3B-Instruct"
           TENSOR_PARALLELISM: "2"
           PIPELINE_PARALLELISM: "1"
-          "NUMEXPR_MAX_THREADS: 32
+          NUMEXPR_MAX_THREADS: "32"
   rayClusterConfig:
     headGroupSpec:
       rayStartParams:
