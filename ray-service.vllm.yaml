@@ -19,7 +19,7 @@ spec:
         pip: ["vllm==0.6.1.post2"]
         env_vars:
           MODEL_ID: "/mnt/Llama-3.2-3B-Instruct"
-          TENSOR_PARALLELISM: "2"
+          TENSOR_PARALLELISM: "1"
           PIPELINE_PARALLELISM: "1"
           NUMEXPR_MAX_THREADS: "32"
   rayClusterConfig:
