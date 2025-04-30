@@ -79,7 +79,7 @@ spec:
             fsGroup: 100
           containers:
           - name: llm
-            image: rayproject/ray-ml:2.33.0.914af0-py311
+            image: rayproject/ray:latest-gpu
             volumeMounts:
             - name: model-volume
               mountPath: /mnt
