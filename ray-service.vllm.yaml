@@ -12,7 +12,7 @@ spec:
       - name: VLLMDeployment
         num_replicas: 1
         ray_actor_options:
-          num_cpus: 8
+          # num_cpus: 32
           # NOTE: num_gpus is set automatically based on TENSOR_PARALLELISM
       runtime_env:
         working_dir: "https://github.com/manikantatarun/kuberay/archive/main.zip"
@@ -94,10 +94,10 @@ spec:
               #   cpu: "8"
               #   memory: "32Gi"
               #   nvidia.com/gpu: "1"
-              requests:
-                cpu: "8"
-                memory: "32Gi"
-                nvidia.com/gpu: "1"
+              # requests:
+              #   cpu: "8"
+              #   memory: "32Gi"
+              #   nvidia.com/gpu: "1"
           # Please add the following taints to the GPU node.
           volumes:
           - name: model-volume
