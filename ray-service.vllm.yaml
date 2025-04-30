@@ -39,7 +39,7 @@ spec:
                     - kuberayhead
           containers:
           - name: ray-head
-            image: rayproject/ray-ml:2.45.0-py311
+            image: rayproject/ray:2.45.0-py311
           tolerations:
           - key: "kubernetes.azure.com/scalesetpriority"
             operator: "Equal"
@@ -80,7 +80,7 @@ spec:
             fsGroup: 100
           containers:
           - name: llm
-            image: rayproject/ray-ml:2.45.0-py311-gpu
+            image: rayproject/ray:2.45.0-py311-gpu
             volumeMounts:
             - name: model-volume
               mountPath: /mnt
