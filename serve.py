@@ -89,7 +89,11 @@ class VLLMDeployment:
             assert isinstance(generator, ChatCompletionResponse)
             return JSONResponse(content=generator.model_dump())
 
-
+    @app.get("/v1/model-info")
+    async def model_info(self):
+        return {"model": self.engine_args.model}
+    
+    
 def parse_vllm_args(cli_args: Dict[str, str]):
     """Parses vLLM args based on CLI inputs.
 
