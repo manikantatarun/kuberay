@@ -93,7 +93,7 @@ class VLLMDeployment:
     async def model_info(self):
         return {"model": self.engine_args.model}
     
-    
+
 def parse_vllm_args(cli_args: Dict[str, str]):
     """Parses vLLM args based on CLI inputs.
 
@@ -124,6 +124,13 @@ def build_app(cli_args: Dict[str, str]) -> serve.Application:
     parsed_args = parse_vllm_args(cli_args)
     engine_args = AsyncEngineArgs.from_cli_args(parsed_args)
     engine_args.worker_use_ray = True
+    default_chat_template = (
+        "{{#system~}}\n{{ system_message }}\n{{~/system}}\n\n"
+        "{{#user~}}\n{{ user_message }}\n{{~/user}}\n\n"
+        "{{#assistant~}}"
+    )
+    chat_template = parsed_args.chat_template or default_chat_template
+
 
     return VLLMDeployment.bind(
         engine_args,
@@ -132,14 +139,17 @@ def build_app(cli_args: Dict[str, str]) -> serve.Application:
         parsed_args.prompt_adapters,
         cli_args.get("request_logger"),
         parsed_args.chat_template,
+        chat_template,
     )
 
 
 model = build_app(
     {
         "model": os.environ['MODEL_ID'], 
+        "served_model_name" : os.environ.get("SERVED_MODEL_NAME", None),
         "tensor-parallel-size": os.environ.get("TENSOR_PARALLELISM",1), 
         "pipeline-parallel-size": os.environ.get("PIPELINE_PARALLELISM",1),
         "max-model-len": os.environ.get("MAX_MODEL_LEN", "2048"),
-        "quantization": os.environ.get("QUANTIZATION", "fp8")
+        "quantization": os.environ.get("QUANTIZATION", "fp8"),
+        "chat_template" : os.environ.get("CHAT_TEMPLATE", None),
     })
