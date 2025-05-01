@@ -124,13 +124,14 @@ def build_app(cli_args: Dict[str, str]) -> serve.Application:
     parsed_args = parse_vllm_args(cli_args)
     engine_args = AsyncEngineArgs.from_cli_args(parsed_args)
     engine_args.worker_use_ray = True
-    default_chat_template = (
-        "{{#system~}}\n{{ system_message }}\n{{~/system}}\n\n"
-        "{{#user~}}\n{{ user_message }}\n{{~/user}}\n\n"
-        "{{#assistant~}}"
-    )
-    chat_template = parsed_args.chat_template or default_chat_template
+    default_chat_template = """
+        {{ system_message }}
 
+        {{ user_message }}
+
+        {{ assistant_message }}
+    """
+    chat_template = parsed_args.chat_template or default_chat_template
 
     return VLLMDeployment.bind(
         engine_args,
