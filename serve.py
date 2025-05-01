@@ -138,7 +138,6 @@ def build_app(cli_args: Dict[str, str]) -> serve.Application:
         parsed_args.lora_modules,
         parsed_args.prompt_adapters,
         cli_args.get("request_logger"),
-        parsed_args.chat_template,
         chat_template,
     )
 
