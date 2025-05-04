@@ -37,8 +37,8 @@ def get_chat_template(model_name: str) -> str:
         path = Path(model_name)
     else:
         path = model_name
-        
-    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True,local_files_only=os.path.isdir(model_name))
+
+    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True,local_files_only=True)
     chat_template = getattr(tokenizer, "chat_template", None)
     if chat_template is None:
         # Provide a reasonable default fallback
