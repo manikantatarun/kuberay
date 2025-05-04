@@ -26,7 +26,8 @@ spec:
           SERVED_MODEL_NAME: "mistral-7b"
           NUMEXPR_MAX_THREADS: "32"
           DEPLOYMENT_NAME: "Mistral-7b-Deployment"
-          QUANTIZATION: "fp8"
+          QUANTIZATION: "awq"
+          PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
   rayClusterConfig:
     headGroupSpec:
       rayStartParams:
