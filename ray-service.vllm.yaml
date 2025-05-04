@@ -25,6 +25,7 @@ spec:
           PIPELINE_PARALLELISM: "1"
           SERVED_MODEL_NAME: "llama-3.2-3b"
           NUMEXPR_MAX_THREADS: "32"
+          DEPLOYMENT_NAME: "LLAMA-3.2-3b-Deployment"
     - name: Mistral-7B-Instruct-v0.2
       route_prefix: /Mistral-7B-Instruct-v0.2
       import_path: serve:model
@@ -45,6 +46,7 @@ spec:
           PIPELINE_PARALLELISM: "1"
           SERVED_MODEL_NAME: "mistral-7b"
           NUMEXPR_MAX_THREADS: "32"
+          DEPLOYMENT_NAME: "Mistral-7b-Deployment"
   rayClusterConfig:
     headGroupSpec:
       rayStartParams:

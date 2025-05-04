@@ -158,7 +158,10 @@ def get_chat_template(model_name: str) -> str:
        
     return chat_template
 
-@serve.deployment(name="VLLMDeployment")
+
+deployment_name = os.environ.get("DEPLOYMENT_NAME", "VLLMDeployment")
+
+@serve.deployment(name=deployment_name)
 @serve.ingress(app)
 class VLLMDeployment:
     def __init__(
