@@ -29,7 +29,7 @@ app = FastAPI()
 from transformers import AutoTokenizer
 
 def get_chat_template(model_name: str) -> str:
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True,local_files_only=os.path.isdir(model_name))
     chat_template = getattr(tokenizer, "chat_template", None)
     if chat_template is None:
         # Provide a reasonable default fallback
@@ -232,6 +232,9 @@ def build_app(cli_args: Dict[str, str]) -> serve.Application:
     
     chat_template = cli_args.get("chat_template")
     if chat_template is None:
+        logger.info("Using Default Template")
+        print("Using Default Template")
+
         chat_template = get_chat_template(engine_args.model)
 
     return VLLMDeployment.bind(
