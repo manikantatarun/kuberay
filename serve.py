@@ -30,20 +30,34 @@ from transformers import AutoTokenizer
 
 def get_chat_template(model_name: str) -> str:
     from pathlib import Path
-    logger.info("Getting chat template for model: %s", model_name)
-    logger.info("Path: %s", Path(model_name))
-    logger.info("Exists: %s", os.path.exists(model_name))
+    import json
     if os.path.isdir(model_name):
         path = Path(model_name)
     else:
         path = model_name
 
-    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True,local_files_only=True)
-    chat_template = getattr(tokenizer, "chat_template", None)
-    if chat_template is None:
-        # Provide a reasonable default fallback
-        # chat_template = "{{ system_message }}\n\n{{ user_message }}\n\n{{ assistant_message }}"
-        chat_template = """
+    chat_template = None
+
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True, local_files_only=os.path.isdir(model_name))
+        chat_template = getattr(tokenizer, "chat_template", None)
+        if chat_template:
+            logger.info("✅ Loaded chat_template from tokenizer.")
+        else:
+            raise ValueError("chat_template is None")
+    except Exception as e:
+        logger.error(f"⚠️ Tokenizer loading failed or chat_template missing: {e}")
+        # Try fallback: manually load tokenizer_config.json
+        config_path = Path(path) / "tokenizer_config.json"
+        if config_path.exists():
+            with open(config_path, "r") as f:
+                config = json.load(f)
+                chat_template = config.get("chat_template")
+                if chat_template:
+                    logger.info("✅ Loaded chat_template from tokenizer_config.json.")
+                else:
+                    logger.error("❌ chat_template not found in tokenizer_config.json. Loading the default chat template")
+                    chat_template = """
         {{- bos_token }}
     {%- if custom_tools is defined %}
         {%- set tools = custom_tools %}
@@ -139,6 +153,9 @@ def get_chat_template(model_name: str) -> str:
     {%- endif %}
     """
     
+        else:
+            logger.error("❌ tokenizer_config.json not found at:", config_path)
+       
     return chat_template
 
 @serve.deployment(name="VLLMDeployment")
