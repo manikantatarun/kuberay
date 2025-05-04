@@ -283,6 +283,6 @@ model = build_app(
         "tensor-parallel-size": os.environ.get("TENSOR_PARALLELISM",1), 
         "pipeline-parallel-size": os.environ.get("PIPELINE_PARALLELISM",1),
         "max-model-len": os.environ.get("MAX_MODEL_LEN", "2048"),
-        "quantization": os.environ.get("QUANTIZATION", "fp8"),
+        "quantization": os.environ.get("QUANTIZATION", "fp16"),
         "chat_template" : os.environ.get("CHAT_TEMPLATE", None),
     })
