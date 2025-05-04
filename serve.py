@@ -29,7 +29,16 @@ app = FastAPI()
 from transformers import AutoTokenizer
 
 def get_chat_template(model_name: str) -> str:
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True,local_files_only=os.path.isdir(model_name))
+    from pathlib import Path
+    logger.info("Getting chat template for model: %s", model_name)
+    logger.info("Path: %s", Path(model_name))
+    logger.info("Exists: %s", os.path.exists(model_name))
+    if os.path.isdir(model_name):
+        path = Path(model_name)
+    else:
+        path = model_name
+        
+    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True,local_files_only=os.path.isdir(model_name))
     chat_template = getattr(tokenizer, "chat_template", None)
     if chat_template is None:
         # Provide a reasonable default fallback
