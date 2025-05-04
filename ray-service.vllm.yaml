@@ -5,8 +5,8 @@ metadata:
 spec:
   serveConfigV2: |
     applications:
-    - name: llm
-      route_prefix: /
+    - name: llama-3.2-3b
+      route_prefix: /llama-3.2-3b
       import_path: serve:model
       deployments:
       - name: VLLMDeployment
@@ -22,6 +22,24 @@ spec:
           TENSOR_PARALLELISM: "1"
           PIPELINE_PARALLELISM: "1"
           SERVED_MODEL_NAME: "llama-3.2-3b"
+          NUMEXPR_MAX_THREADS: "32"
+    - name: Mistral-7B-Instruct-v0.2
+      route_prefix: /Mistral-7B-Instruct-v0.2
+      import_path: serve:model
+      deployments:
+      - name: VLLMDeploymentMistral
+        num_replicas: 1
+        ray_actor_options:
+          num_cpus: 8
+      runtime_env:
+        working_dir: "https://github.com/manikantatarun/kuberay/archive/main.zip"
+        pip:
+          - vllm==0.6.1.post2
+        env_vars:
+          MODEL_ID: "/mnt/Mistral-7B-Instruct-v0.2"
+          TENSOR_PARALLELISM: "1"
+          PIPELINE_PARALLELISM: "1"
+          SERVED_MODEL_NAME: "mistral-7b"
           NUMEXPR_MAX_THREADS: "32"
   rayClusterConfig:
     headGroupSpec:
