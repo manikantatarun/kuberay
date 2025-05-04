@@ -9,8 +9,10 @@ spec:
       route_prefix: /llama-3.2-3b
       import_path: serve:model
       deployments:
-      - name: VLLMDeployment
-        num_replicas: 1
+      - name: LLAMA-3.2-3b-Deployment
+        autoscaling_config:
+          min_replicas: 1
+          max_replicas: 4
         ray_actor_options:
           num_cpus: 8
           # NOTE: num_gpus is set automatically based on TENSOR_PARALLELISM
@@ -27,8 +29,10 @@ spec:
       route_prefix: /Mistral-7B-Instruct-v0.2
       import_path: serve:model
       deployments:
-      - name: VLLMDeploymentMistral
-        num_replicas: 1
+      - name: Mistral-7b-Deployment
+        autoscaling_config:
+          min_replicas: 1
+          max_replicas: 4
         ray_actor_options:
           num_cpus: 8
       runtime_env:
