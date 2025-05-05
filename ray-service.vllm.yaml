@@ -21,12 +21,12 @@ spec:
           - vllm==0.6.1.post2
         env_vars:
           MODEL_ID: "/mnt/Mistral-7B-Instruct-v0.2"
-          TENSOR_PARALLELISM: "1"
+          TENSOR_PARALLELISM: "2"
           PIPELINE_PARALLELISM: "1"
           SERVED_MODEL_NAME: "mistral-7b"
           NUMEXPR_MAX_THREADS: "32"
           DEPLOYMENT_NAME: "Mistral-7b-Deployment"
-          QUANTIZATION: "awq"
+          QUANTIZATION: "fp16"
           PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
   rayClusterConfig:
     headGroupSpec:
@@ -100,11 +100,11 @@ spec:
               limits:
                 cpu: "30"
                 memory: "300Gi"
-                nvidia.com/gpu: "1"
+                nvidia.com/gpu: "2"
               requests:
                 cpu: "30"
                 memory: "300Gi"
-                nvidia.com/gpu: "1"
+                nvidia.com/gpu: "2"
           # Please add the following taints to the GPU node.
           volumes:
           - name: model-volume
